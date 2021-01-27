@@ -7,7 +7,7 @@
 
 """
 
-特殊属性和特殊方法
+Python的特殊属性
 
 
 """
@@ -23,10 +23,14 @@ class B:
     pass
 
 
-class C(A , B):
+class C(B, A):
     def __init__(self, name ,age):
         self.name = name
         self.age = age
+
+
+class D(A):
+    pass
 
 
 x = C("张三", 22)
@@ -34,15 +38,15 @@ x = C("张三", 22)
 print(x.__dict__)
 print(C.__dict__)
 
-print("------------")
+print("--------------------------------------")
 # 输出了对象所属类型
-print("输出了对象所属类型",x.__class__)
+print("输出了对象所属类型：", x.__class__)
 
 # C类的父类类型的元素
-print("C类的父类类型的元素", C.__bases__)
-print("类的基类",C.__base__)
+print("C类的父类类型的元素：", C.__bases__)
+print("类的基类,继承最近的：", C.__base__)
 
 # 类的层次结构
-print("类的层次结构",C.__mro__)
+print("类的层次结构", C.__mro__)
 # 子类的列表
-print("子类的列表",A.__subclasses__())
+print("子类的列表", A.__subclasses__())
