@@ -26,6 +26,8 @@ from packege.module_A import a
 
 
 # import packege.module_A
+
+# as 别名
 import packege.module_A as ma
 # print(packege.module_A.a)
 
