@@ -13,6 +13,7 @@ import os
 
 filename ='student.txt'
 
+
 def main():
     while True:
         menu()
@@ -51,7 +52,7 @@ def main():
 def insert():
     students_list =[]
     while True:
-        id = int(input("请输入学生编号(如：ID 1001)"))
+        id = input("请输入学生编号(如：ID 1001)")
         if not id:
             break
         name = input("请输入学生姓名")
@@ -83,31 +84,86 @@ def insert():
 
 def save(lst):
     try:
-        stu_txt = open(filename,'a',encoding='utf-8')
+        stu_txt = open(filename, 'a', encoding='utf-8')
     except:
-        stu_txt = open(filename,'w', encoding='utf-8')
+        stu_txt = open(filename, 'w', encoding='utf-8')
     for item in lst:
         stu_txt.write(str(item)+'\n')
     stu_txt.close()
 
 
 def search():
-    pass
+    student_query = []
+    while True:
+        id = ""
+        name = ""
+        if os.path.exists(filename):
+            mode = input("按照ID查找，请输入1，按姓名查找，请输入2")
+            if mode == '1':
+                id = input("请输入学生ID")
+            elif mode == '2':
+                name = input("请输入学生姓名")
+            else:
+                print("您的输入有误，请重新输入")
+                search()
+
+            with open(filename, 'r', encoding="utf-8") as rfile:
+                student = rfile.readlines()
+                for item in student:
+                    d = dict(eval(str(item)))
+                    if id != "":
+                        if d['id'] == id:
+                            student_query.append(d)
+                    elif name != "":
+                        if d['name'] == name:
+                            student_query.append(d)
+
+            # 显示查询结果
+            show_student(student_query)
+            # 清空列表
+            student_query.clear()
+            answer = input("是否继续查询? Y/N \n")
+            if answer == "Y" or answer == "y":
+                continue
+            else:
+                break
+
+        else:
+            print("暂未保存学生信息")
+            return
+
+
+def show_student(lst):
+    if len(lst) == 0:
+        print("没有查询到学生信息,无数据显示")
+        return
+    # 定义标题格式显示
+    format_title = "{:^6}\t {:^12}\t {:^8}\t{:^10}\t{:^10}\t{:^8}"
+    print(format_title.format("ID", "姓名", "英语成绩", "Python成绩", "JAVA成绩", "总成绩"))
+    # 定义内容的显示格式
+    format_date = "{:^6}\t {:^12}\t {:^9}\t{:^15}\t{:^11}\t{:^8}"
+    for item in lst:
+        print(format_date.format(item.get("id"),
+                                 item.get("name"),
+                                 item.get("english"),
+                                 item.get("python"),
+                                 item.get("java"),
+                                 int(item.get("english")+item.get("python")+item.get("java"))))
 
 
 def delete():
     while True:
-        student_id = int(input("请选择需要删除的学生编号"))
+        student_id = input("请选择需要删除的学生编号")
         if student_id != "":
             if os.path.exists(filename):
                 with open(filename, 'r', encoding='utf-8') as file:
                     student_old = file.readlines()
             else:
-                student_old=[]
+                student_old= []
             #  标记是否删除
             flag = False
             if student_old:
-                with open(filename,'w',encoding='utf-8') as wfile:
+                with open(filename, 'w', encoding='utf-8') as wfile:
                     d = {}
                     for item in student_old:
                         # 将字符串转换为字典
