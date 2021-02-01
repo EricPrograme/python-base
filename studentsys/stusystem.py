@@ -11,6 +11,8 @@
 """
 import os
 
+from gitdb.utils import encoding
+
 filename ='student.txt'
 
 
@@ -231,17 +233,67 @@ def modify():
             modify()
 
 
-
 def sort():
-    pass
+    show()
+    if os.path.exists(filename):
+        with open(filename,'r',encoding='utf-8') as rfile:
+            student_list = rfile.readlines()
+        student_new =[]
+        for item in student_list:
+            d = dict(eval(item))
+            student_new.append(d)
+    else:
+        return
+
+    asc_or_desc = input("请选择（0.升序，1.降序）:")
+    if asc_or_desc == "0":
+        asc_or_desc_bool = False
+    elif asc_or_desc == "1":
+        asc_or_desc_bool = True
+    else:
+        print("您的输入有误，请重新输入")
+        sort()
+    mode = input("请选择排序方式（1.按照英语成绩排序 2.按照Python成绩排序 3.按JAVA成绩排序 0.按照总成绩排序）")
+    if mode == "1":
+        student_new.sort(key=lambda x: int(x["english"]), reverse=asc_or_desc_bool)
+    elif mode == "2":
+        student_new.sort(key=lambda x: int(x["python"]), reverse=asc_or_desc_bool)
+    elif mode == "3":
+        student_new.sort(key=lambda x: int(x["java"]), reverse=asc_or_desc_bool)
+    elif mode == "0":
+        student_new.sort(key=lambda x: int(x["english"])+int(x["python"])+int(x["java"]), reverse=asc_or_desc_bool)
+    else:
+        print("输入有误，请重新输入")
+        return
+    show_student(student_new)
 
 
 def total():
-    pass
+    if os.path.exists(filename):
+        with open(filename,'r',encoding ='utf-8') as rfile:
+            students = rfile.readlines()
+            if students:
+                print(f"一共有{len(students)}名学生")
+            else:
+                print("还有没有录入学生信息。")
+
+    else:
+        print("暂未保存学生数据信息")
 
 
 def show():
-    pass
+    student_lst = []
+    if os.path.exists(filename):
+        with open(filename, 'r', encoding="utf-8") as rfile:
+            students = rfile.readlines()
+            for item in students:
+                student_lst.append(eval(item))
+            if student_lst:
+                show_student(student_lst)
+            else:
+                print("暂未保存学生数据信息")
+    else:
+        print("暂未保存学生数据信息")
 
 
 def menu():
