@@ -7,3 +7,6 @@
 /venv/Scripts/*.ps1
 /venv/*.cfg
 /venv/Scripts
+
+.idea/*
+/.idea/*.iml
