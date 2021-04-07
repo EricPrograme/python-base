@@ -2,3 +2,15 @@
 /studentsys/__pycache__/*.pyc
 .idea/*
 /.idea
+*.pyc
+/venv/Lib/*
+/*.pyd
+/venv/Scripts/*.pyd
+/venv/Scripts/*.bat
+/.idea/workspace.xml
+/venv/Scripts/*.ps1
+/venv/*.cfg
+/venv/Scripts
+
+.idea/*
+/.idea/*.iml
